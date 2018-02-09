@@ -2,7 +2,6 @@
 # ToDo: Document
 #=============================================================================#
 
-set(PLATFORM_PATH "${BASE_PATH}/${VENDOR_ID}/${PLATFORM_ARCHITECTURE}")
 set(PLATFORM "${VENDOR_ID}")
 set(ARCHITECTURE_ID ${PLATFORM_ARCHITECTURE})
 
@@ -32,6 +31,11 @@ find_file(${PLATFORM}_BOOTLOADERS_PATH
         PATHS ${PLATFORM_PATH}
         DOC "Path to directory containing the Arduino bootloader images and sources.")
 
+find_file(${PLATFORM}_PLATFORM_PATH
+        NAMES platform.txt
+        PATHS ${PLATFORM_PATH}
+        DOC "Path to Arduino platform definition file.")
+
 find_file(${PLATFORM}_PROGRAMMERS_PATH
         NAMES programmers.txt
         PATHS ${PLATFORM_PATH}
@@ -56,6 +60,12 @@ if (ARDUINO_SDK_VERSION VERSION_GREATER 1.0.5)
     set(ARDUINO_PLATFORM_LIBRARIES_PATH "${${PLATFORM}_PLATFORM_LIBRARIES_PATH}")
 else ()
     set(ARDUINO_PLATFORM_LIBRARIES_PATH "")
+endif ()
+
+if (${PLATFORM}_PLATFORM_PATH)
+    set(SETTINGS_LIST ${PLATFORM}_PLATFORM)
+    set(SETTINGS_PATH "${${PLATFORM}_PLATFORM_PATH}")
+    include(LoadArduinoPlatformSettings)
 endif ()
 
 if (${PLATFORM}_BOARDS_PATH)

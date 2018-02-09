@@ -86,9 +86,10 @@ if (NOT ${SETTINGS_LIST} AND EXISTS ${SETTINGS_PATH})
 
             # menu.cpu.architecture settings
             if (ENTRY_NAME_TOKENS_LEN GREATER 5)
-                list(GET ENTRY_NAME_TOKENS 3 CPU_ARCH)
+                list(GET ENTRY_NAME_TOKENS 2 ENTRY_MENU_ITEM)
+                list(GET ENTRY_NAME_TOKENS 3 ENTRY_MENU_CHOICE)
                 list(GET ENTRY_NAME_TOKENS 4 ENTRY_SETTING)
-                set(ENTRY_SETTING menu.cpu.${CPU_ARCH}.${ENTRY_SETTING})
+                set(ENTRY_SETTING menu.${ENTRY_MENU_ITEM}.${ENTRY_MENU_CHOICE}.${ENTRY_SETTING})
             else ()
                 list(GET ENTRY_NAME_TOKENS 1 ENTRY_SETTING)
             endif ()

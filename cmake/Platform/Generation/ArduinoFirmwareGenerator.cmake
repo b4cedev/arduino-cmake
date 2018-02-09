@@ -10,7 +10,7 @@ function(generate_arduino_firmware INPUT_NAME)
     parse_generator_arguments(${INPUT_NAME} INPUT
             "NO_AUTOLIBS;MANUAL"                     # Options
             "BOARD;BOARD_CPU;PORT;SKETCH;PROGRAMMER" # One Value Keywords
-            "SERIAL;SRCS;HDRS;LIBS;ARDLIBS;AFLAGS"   # Multi Value Keywords
+            "SERIAL;SRCS;HDRS;LIBS;ARDLIBS;AFLAGS;BOARD_TAGS"   # Multi Value Keywords
             ${ARGN})
 
     if (NOT INPUT_BOARD)
@@ -31,6 +31,7 @@ function(generate_arduino_firmware INPUT_NAME)
     if (NOT INPUT_MANUAL)
         set(INPUT_MANUAL FALSE)
     endif ()
+    set(BOARD_TAGS ${INPUT_BOARD_TAGS})
     validate_variables_not_empty(VARS INPUT_BOARD MSG "must define for target ${INPUT_NAME}")
 
     _get_board_id(${INPUT_BOARD} "${INPUT_BOARD_CPU}" ${INPUT_NAME} BOARD_ID)
